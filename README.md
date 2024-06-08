@@ -17,3 +17,6 @@ To run the the server check the [server/README.md](./packages/server/README.md) 
 
 1. We use beta express@v5, as it supports async handlers out of the box. This way we can throw errors
 from any middleware and they will be caught by the error handler middleware.
+
+2. The module `@electric-sql/pglite`, will alow us to run PostgreSQL's wasm version, which will remove
+the need to have a running PostgreSQL server on the machine. The data will be stored in the `data` directory.

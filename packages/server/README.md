@@ -1,7 +1,9 @@
 # @chat/server
 
-The package contains `Node.js` server for creating users, rooms and send messages.
-If you don't have Node.js and yarn installed, please install them as described in [README.md](../../README.md).
+The package contains `Node.js` server for creating users, rooms and send messages. If you don't have Node.js and
+yarn installed, please install them as described in [README.md](../../README.md). There is no need to
+have a database connection string, as we will use `@electric-sql/pglite`, to run local PostgreSQL storing
+data in the `data` folder.
 
 ## Development
 

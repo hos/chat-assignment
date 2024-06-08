@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@chat/config": "workspace:^",
+    "@electric-sql/pglite": "^0.1.5",
     "express": "v5.0.0-beta.3"
   }
 }

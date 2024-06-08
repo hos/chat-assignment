@@ -8,3 +8,6 @@
 !.yarn/versions
 
 node_modules
+
+# This directory will be used by PGLite to store the data of PostgreSQL database.
+data
