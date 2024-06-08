@@ -4,8 +4,13 @@ import { PORT } from "@chat/config";
 import { logger } from "./utils/logger.js";
 import { databaseMiddleware } from "./middleware/databaseMiddleware.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { migrate } from "./database/index.js";
 
 const app = Express();
+
+// This can be moved to a script, and executed upon deployment,
+// instead of running it every time the server starts.
+await migrate();
 
 app.use(databaseMiddleware);
 

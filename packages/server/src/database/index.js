@@ -1,4 +1,3 @@
-import { DATABASE_URL } from "@chat/config";
-import { PGlite } from "@electric-sql/pglite";
-
-export const pgClient = new PGlite(DATABASE_URL);
+export * from "./client.js";
+export * from "./migrate.js";
+export * from "./user.js";

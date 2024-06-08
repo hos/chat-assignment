@@ -1,7 +1,8 @@
 
 export const PORT = process.env.PORT || 3024;
 
-// Currently we use a local database, but we could easily switch to a remote one
-// by changing the DATABASE_URL environment variable and also using a client like
-// pg, pg-promise, ORMs etc.
-export const DATABASE_URL = process.env.DATABASE_URL || "../../data";
+// If nothing is provided, PGlite will default to in memory database
+// you can persist your database by providing a path to an existing directory.
+// This is not actual postgres connection string, but just a directory path.
+// like ../../data
+export const DATABASE_URL = process.env.DATABASE_URL;

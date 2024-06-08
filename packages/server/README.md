@@ -21,3 +21,14 @@ yarn workspace @chat/server run start
 ```
 
 
+## Test
+
+This package uses Node.js built-in [assert](https://nodejs.org/docs/v20.13.1/api/assert.html) module and [test runner](https://nodejs.org/docs/v20.13.1/api/test.html#test-runner) for testing. To run the tests, you need to run the following command:
+```bash
+yarn workspace @chat/server run test
+```
+
+Also you can run test in watch mode, using command:
+```bash
+yarn workspace @chat/server run test --watch
+```
