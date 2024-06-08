@@ -1,0 +1,9 @@
+{
+  "name": "@chat/config",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "packageManager": "yarn@4.2.2"
+}

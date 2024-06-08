@@ -5,8 +5,20 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@chat/config@workspace:packages/config":
+  version: 0.0.0-use.local
+  resolution: "@chat/config@workspace:packages/config"
+  languageName: unknown
+  linkType: soft
+
 "chat@workspace:.":
   version: 0.0.0-use.local
   resolution: "chat@workspace:."
+  languageName: unknown
+  linkType: soft
+
+"server@workspace:packages/server":
+  version: 0.0.0-use.local
+  resolution: "server@workspace:packages/server"
   languageName: unknown
   linkType: soft
