@@ -35,11 +35,11 @@ router.post("/", async function createUserHandler(req, res) {
     throw err;
   });
 
-  const session = await createUserSession(username, password);
+  const userSession = await createUserSession(username, password);
 
-  setTokenCookie(res, session.token);
+  setTokenCookie(res, userSession.session.token);
 
   // If the client is not in the browser, it can use the token from the session
   // and store it as appropriate for that specific environment.
-  res.json(sanitize(session));
+  res.json(sanitize(userSession));
 });

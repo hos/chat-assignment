@@ -6,3 +6,5 @@ export const PORT = process.env.PORT || 3024;
 // This is not actual postgres connection string, but just a directory path.
 // like ../../data
 export const DATABASE_URL = process.env.DATABASE_URL;
+
+export const COOKIE_EXPIRY = 60 * 60 * 24 * 7; // 7 days

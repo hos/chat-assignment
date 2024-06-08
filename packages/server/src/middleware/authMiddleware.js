@@ -1,3 +1,4 @@
+import { COOKIE_EXPIRY } from "@chat/config";
 import { getUserByToken } from "../database/index.js";
 import { HttpError } from "../utils/HttpError.js";
 
@@ -40,6 +41,6 @@ export async function requireUser(req, res, next) {
 export function setTokenCookie(res, token) {
   res.setHeader(
     "Set-Cookie",
-    `token=${token}; HttpOnly; Secure; SameSite=None`
+    `token=${token}; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=${COOKIE_EXPIRY}`
   );
 }

@@ -1,3 +1,4 @@
+import { COOKIE_EXPIRY } from "@chat/config";
 import { getToken, hash, verify } from "../utils/hash.js";
 import { pgClient } from "./client.js";
 
@@ -113,18 +114,24 @@ export async function createUserSession(username, password) {
  */
 export async function getUserByToken(token) {
   const {
-    rows: [session],
-  } = await pgClient.query(`select * from tokens where token = $1;`, [token]);
+    rows: [userSession],
+  } = await pgClient.query(
+    `--sql
+    with token as (
+      select * from tokens
+        where token = $1
+        and created_at > now() - ($2 || ' seconds')::interval
+    )
 
-  if (!session) {
-    return null;
-  }
+    select
+      row_to_json(users.*) as user,
+      row_to_json(token.*) as session
+    from token
+    join users on users.id = token.user_id;
 
-  const {
-    rows: [user],
-  } = await pgClient.query(`select * from users where id = $1;`, [
-    session.user_id,
-  ]);
+  `,
+    [token, COOKIE_EXPIRY]
+  );
 
-  return user;
+  return userSession;
 }
