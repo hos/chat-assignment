@@ -1,5 +1,14 @@
 {
-  "name": "server",
+  "name": "@chat/server",
   "packageManager": "yarn@4.2.2",
-  "private": true
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "@chat/config": "workspace:^",
+    "express": "v5.0.0-beta.3"
+  }
 }

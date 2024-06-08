@@ -1,4 +1,4 @@
-# config
+# @chat/config
 
 This package contains all the project specific configurations, like database
 connection strings, API keys, etc. If there is some package specific configuration
