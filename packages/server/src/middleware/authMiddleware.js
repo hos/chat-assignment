@@ -24,8 +24,34 @@ export async function authMiddleware(req, res, next) {
     return;
   }
 
-  const user = await getUserByToken(token);
-  req.user = user;
+  const userSession = await getUserByToken(token);
+  if (userSession) {
+    req.user = userSession.user;
+    req.session = userSession.session;
+  }
+
+  next();
+}
+
+/**
+ *
+ * @param {import('socket.io').Socket} socket
+ * @param {Function} next
+ * @returns
+ */
+export async function socketAuthMiddleware(socket, next) {
+  const token = getTokenFromCookie(socket.request.headers);
+
+  if (!token) {
+    next(new HttpError(401, "Unauthorized"));
+    return;
+  }
+
+  const userSession = await getUserByToken(token);
+  if (userSession) {
+    socket.user = userSession.user;
+    socket.session = userSession.session;
+  }
 
   next();
 }

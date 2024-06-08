@@ -7,6 +7,7 @@
  * @property {string} created_at
  */
 
+import { io } from "../server.js";
 import { pgClient } from "./client.js";
 
 export const MESSAGE_LIMIT = 100;
@@ -28,6 +29,8 @@ export async function createMessage({ userId, roomId, content }) {
       returning id, user_id, room_id, content, created_at;`,
     [userId, roomId, content]
   );
+
+  io.emit("message", message);
 
   return message;
 }

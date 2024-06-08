@@ -38,7 +38,7 @@ describe("user session", () => {
 
     ok(typeof session.token === "string");
 
-    const user = await getUserByToken(session.token);
+    const { user } = await getUserByToken(session.token);
 
     ok(user.username === "myUser");
   });

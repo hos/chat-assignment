@@ -76,7 +76,7 @@ export async function verifyUserPassword(username, password) {
  * @typedef {Object} UserSession
  * @property {User} user
  * @property {Session} session
- * 
+ *
  * @param {string} username
  * @param {string} password
  * @returns {Promise<null | UserSession>}
@@ -110,7 +110,7 @@ export async function createUserSession(username, password) {
 
 /**
  * @param {string} token
- * @returns {Promise<null | User>}
+ * @returns {Promise<null | UserSession>}
  */
 export async function getUserByToken(token) {
   const {

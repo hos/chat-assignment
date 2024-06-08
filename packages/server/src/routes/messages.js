@@ -8,14 +8,12 @@ import {
   getMessagesByRoomId,
 } from "../database/message.js";
 import { requireUser } from "../middleware/authMiddleware.js";
-import { getMainRoom, roomMiddleware } from "../middleware/roomMiddleware.js";
+import { getDefaultRoom } from "../database/room.js";
 
 export const router = Router();
 
 // If user not authorized, return 401
 router.use(requireUser);
-// We want to ensure that there is a default room on the req.app.
-router.use(roomMiddleware);
 
 const CreateMessageSchema = z.object({
   body: z.object({
@@ -25,7 +23,7 @@ const CreateMessageSchema = z.object({
 
 router.post("/", async function loginHandler(req, res) {
   const user = req.user;
-  const room = getMainRoom(req);
+  const room = await getDefaultRoom();
   const { body } = CreateMessageSchema.parse(req);
   const { content } = body;
 
@@ -52,7 +50,7 @@ const GetMessagesSchema = z.object({
 });
 
 router.get("/", async function getMessagesHandler(req, res) {
-  const room = getMainRoom(req);
+  const room = await getDefaultRoom();
   const { query } = GetMessagesSchema.parse(req);
   const { beforeMessageId, afterMessageId, limit } = query;
 
