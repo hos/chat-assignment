@@ -1,3 +1,4 @@
+import { ZodError } from "zod";
 import { HttpError } from "../utils/HttpError.js";
 import { logger } from "../utils/logger.js";
 
@@ -12,11 +13,16 @@ export function errorHandler(err, req, res, next) {
   logger.error(err);
 
   if (err instanceof HttpError) {
-    res.status(err.status).send(err.message);
+    res.status(err.status).send({ message: err.message });
     return;
   }
 
-  // Add here more error types that you want to handle.
+  // Inside handlers, when we validate user input using Zod, it will
+  // throw an error, so we handle it here and tell the user what went wrong.
+  if (err instanceof ZodError) {
+    res.status(400).send({ message: err.message, errors: err.errors });
+    return;
+  }
 
-  res.status(500).send("Something went wrong");
+  res.status(500).send({ message: "Something went wrong" });
 }

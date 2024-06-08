@@ -34,7 +34,7 @@ describe("user creation", () => {
 
 describe("user session", () => {
   test("must create session and get it with token", async () => {
-    const session = await createUserSession("myUser", "myPassword");
+    const { session } = await createUserSession("myUser", "myPassword");
 
     ok(typeof session.token === "string");
 

@@ -72,9 +72,13 @@ export async function verifyUserPassword(username, password) {
 }
 
 /**
+ * @typedef {Object} UserSession
+ * @property {User} user
+ * @property {Session} session
+ * 
  * @param {string} username
  * @param {string} password
- * @returns {Promise<null | Session>}
+ * @returns {Promise<null | UserSession>}
  */
 export async function createUserSession(username, password) {
   const user = await getUserByUsername(username);
@@ -100,7 +104,7 @@ export async function createUserSession(username, password) {
     [user.id, token]
   );
 
-  return session;
+  return { user, session };
 }
 
 /**

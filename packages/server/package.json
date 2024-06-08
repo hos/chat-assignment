@@ -11,6 +11,8 @@
   "dependencies": {
     "@chat/config": "workspace:^",
     "@electric-sql/pglite": "^0.1.5",
-    "express": "v5.0.0-beta.3"
+    "body-parser": "^1.20.2",
+    "express": "v5.0.0-beta.3",
+    "zod": "^3.23.8"
   }
 }
