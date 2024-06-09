@@ -5,7 +5,7 @@ import { HttpError } from "../utils/HttpError.js";
 // This actually can be removed if we add cookie-parser to the project,
 // in that case we can get the cookie from req.cookies.token.
 function getTokenFromCookie(req) {
-  return (req.cookie || req.headers.cookie)
+  return (req.cookie || req.headers?.cookie)
     ?.split(";")
     .find((c) => c.startsWith("token="))
     ?.split("=")[1];

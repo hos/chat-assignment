@@ -12,6 +12,7 @@ This is a monorepo for the chat application. It contains next packages:
 To run the project, you need to have
 1. [Node.js](https://nodejs.org/en/) installed on your machine.
 2. [Yarn](https://yarnpkg.com/) installed on your machine. You can also install it using `npm i -g yarn`.
+3. Run `yarn install` in the root of the project to install all the dependencies.
 
 To run the the server check the [server/README.md](./packages/server/README.md) file.
 

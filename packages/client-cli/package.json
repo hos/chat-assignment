@@ -5,6 +5,7 @@
   "packageManager": "yarn@4.2.2",
   "scripts": {
     "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
     "test": "node --test",
     "test:watch": "node --test --watch"
   },
