@@ -40,7 +40,8 @@ export async function authMiddleware(req, res, next) {
  * @returns
  */
 export async function socketAuthMiddleware(socket, next) {
-  const token = getTokenFromCookie(socket.request.headers);
+  const token =
+    socket.handshake.auth.token || getTokenFromCookie(socket.request.headers);
 
   if (!token) {
     next(new HttpError(401, "Unauthorized"));
