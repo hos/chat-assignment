@@ -24,9 +24,16 @@ export async function createMessage({ userId, roomId, content }) {
   const {
     rows: [message],
   } = await pgClient.query(
-    `insert into messages (user_id, room_id, content)
-      values ($1, $2, $3)
-      returning id, user_id, room_id, content, created_at;`,
+    `--sql
+    with inserted as (
+      insert into messages (user_id, room_id, content)
+        values ($1, $2, $3)
+        returning id, user_id, room_id, content, created_at
+    )
+
+    select inserted.*, users.username from inserted
+    join users on inserted.user_id = users.id
+      `,
     [userId, roomId, content]
   );
 
@@ -52,13 +59,14 @@ export async function getMessagesByRoomId({
   limit = MESSAGE_LIMIT,
 }) {
   const { rows } = await pgClient.query(
-    `select * from messages
+    `select messages.*, users.username from messages
+      join users on messages.user_id = users.id
       where room_id = $1
-      and id > $2::bigint
+      and messages.id > $2::bigint
       and (
-        case when $3::bigint is null then true else id < $3::bigint end
+        case when $3::bigint is null then true else messages.id < $3::bigint end
       )
-      order by id desc
+      order by messages.id desc
       limit $4::int;
     `,
     [roomId, afterMessageId, beforeMessageId, limit]
