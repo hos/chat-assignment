@@ -10,12 +10,15 @@ import {
 import { migrate } from "./database/index.js";
 import { server, io, app } from "./server.js";
 import { logger } from "./utils/logger.js";
+import { router as healthRouter } from "./routes/health.js";
 
 // This can be moved to a script, and executed upon deployment,
 // instead of running it every time the server starts.
 await migrate();
 
 io.use(socketAuthMiddleware);
+
+app.use("/health", healthRouter);
 
 app.use(bodyParser.json());
 
