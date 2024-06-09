@@ -3,6 +3,8 @@ import bodyParser from "body-parser";
 import { databaseMiddleware } from "./middleware/databaseMiddleware.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { router } from "./routes/index.js";
+import { createAdapter } from "@socket.io/redis-adapter";
+
 import {
   authMiddleware,
   socketAuthMiddleware,
@@ -10,11 +12,17 @@ import {
 import { migrate } from "./database/index.js";
 import { server, io, app } from "./server.js";
 import { logger } from "./utils/logger.js";
+import { pubClient, subClient } from "./cache/client.js";
 import { router as healthRouter } from "./routes/health.js";
 
 // This can be moved to a script, and executed upon deployment,
 // instead of running it every time the server starts.
 await migrate();
+
+if (pubClient && subClient) {
+  logger.info(`Using Redis for socket.io adapter.`);
+  io.adapter(createAdapter(pubClient, subClient));
+}
 
 io.use(socketAuthMiddleware);
 
