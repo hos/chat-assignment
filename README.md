@@ -18,4 +18,4 @@ To run the project, you need to have
 2. [Yarn](https://yarnpkg.com/) installed on your machine. You can also install it using `npm i -g yarn`.
 3. Run `yarn install` in the root of the project to install all the dependencies.
 
-To run the the server check the [server/README.md](./packages/server/README.md) file.
+You can use the client if you a server, if you want to run your own server, check the [server/README.md](./packages/server/README.md) file.
