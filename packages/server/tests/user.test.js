@@ -1,4 +1,4 @@
-import { describe, test, before } from "node:test";
+import { describe, test } from "node:test";
 import { ok, equal } from "assert";
 import {
   createUser,
@@ -8,9 +8,7 @@ import {
   verifyUserPassword,
 } from "../src/database/index.js";
 
-before(async () => {
-  await migrate(true);
-});
+await migrate(true);
 
 describe("user creation", () => {
   test("must create new user, with hashed password", async () => {
@@ -22,24 +20,24 @@ describe("user creation", () => {
   test("must be able to verify user password", async () => {
     const user = await verifyUserPassword("myUser", "myPassword");
 
-    ok(typeof user === "object");
+    equal(typeof user, "object");
   });
 
   test("invalid password must fail", async () => {
     const user = await verifyUserPassword("myUser", "invalidPassword");
 
-    ok(user === null);
+    equal(user, null);
   });
 });
 
 describe("user session", () => {
   test("must create session and get it with token", async () => {
-    const { session } = await createUserSession("myUser", "myPassword");
+    const userSession = await createUserSession("myUser", "myPassword");
 
-    ok(typeof session.token === "string");
+    equal(typeof userSession?.session.token, "string");
 
-    const { user } = await getUserByToken(session.token);
+    const { user } = await getUserByToken(userSession?.session.token);
 
-    ok(user.username === "myUser");
+    equal(user.username, "myUser");
   });
 });
