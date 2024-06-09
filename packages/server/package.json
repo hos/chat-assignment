@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --env-file .env --watch src/app.js",
     "start": "node --env-file .env src/app.js",
-    "test": "NODE_ENV=test node --test"
+    "test": "node --test",
+    "test:watch": "node --test --watch"
   },
   "dependencies": {
     "@chat/config": "workspace:^",
