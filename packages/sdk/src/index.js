@@ -1,9 +1,19 @@
 export class ChatSDK {
+  #token = null;
+
   constructor(baseURL) {
     this.baseURL = baseURL;
-    this.headers = {
+  }
+
+  get headers() {
+    return {
       "Content-Type": "application/json",
+      Cookie: this.#token ? `token=${this.#token}` : "",
     };
+  }
+
+  setToken(token) {
+    this.#token = token;
   }
 
   async createUser(username, password) {
@@ -12,10 +22,8 @@ export class ChatSDK {
       headers: this.headers,
       body: JSON.stringify({ username, password }),
     });
-    const userSession = await response.json();
-    if (userSession.session.token) {
-      this.headers["Cookie"] = `token=${userSession.session.token}`;
-    }
+    const data = await response.json();
+    return data;
   }
 
   async getCurrentUser() {
@@ -33,9 +41,6 @@ export class ChatSDK {
       body: JSON.stringify({ username, password }),
     });
     const data = await response.json();
-    if (data.session.token) {
-      this.headers["Cookie"] = `token=${data.session.token}`;
-    }
     return data;
   }
 
