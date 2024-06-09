@@ -1,0 +1,13 @@
+{
+  "name": "@chat/client-cli",
+  "private": true,
+  "type": "module",
+  "packageManager": "yarn@4.2.2",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@chat/sdk": "workspace:^",
+    "socket.io-client": "^4.7.5"
+  }
+}

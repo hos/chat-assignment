@@ -4,6 +4,9 @@ This is a monorepo for the chat application. It contains next packages:
 
 `@chat/config` - here must be stored all the project related configurations
 `@chat/server` - the server which handles all the requests
+`@chat/sdk` - the javascript sdk for the chat application
+`@chat/cli` - prototype of the client cli for the chat application
+
 
 ## Usage
 To run the project, you need to have
