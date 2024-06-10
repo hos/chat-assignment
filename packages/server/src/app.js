@@ -11,7 +11,7 @@ import {
 } from "./middleware/authMiddleware.js";
 import { migrate } from "./database/index.js";
 import { server, io, app } from "./server.js";
-import { logger } from "./utils/logger.js";
+import { httpLogger, logger } from "./utils/logger.js";
 import { pubClient, subClient } from "./cache/client.js";
 import { router as healthRouter } from "./routes/health.js";
 
@@ -25,6 +25,8 @@ if (pubClient && subClient) {
 }
 
 io.use(socketAuthMiddleware);
+
+app.use(httpLogger());
 
 app.use("/health", healthRouter);
 
