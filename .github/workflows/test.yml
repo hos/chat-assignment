@@ -26,4 +26,4 @@ jobs:
         run: yarn install
 
       - name: Run tests
-        run: yarn workspace @chat/server run test
+        run: yarn test
