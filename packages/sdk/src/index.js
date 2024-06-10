@@ -16,59 +16,63 @@ export class ChatSDK {
     this.#token = token;
   }
 
-  async createUser(username, password) {
-    const response = await fetch(`${this.baseURL}/api/v1/users`, {
-      method: "POST",
+  safeJsonParse(response) {
+    if (response.status >= 500) {
+      throw new Error(
+        `Invalid server response: ${response.status}, ${response.statusText}`
+      );
+    }
+    return response.json();
+  }
+
+  fetch(url, options) {
+    return fetch(`${this.baseURL}${url}`, {
+      ...options,
       headers: this.headers,
+    }).then(this.safeJsonParse);
+  }
+
+  async healthCheck() {
+    return this.fetch(`/health`);
+  }
+
+  async createUser(username, password) {
+    return this.fetch(`/api/v1/users`, {
+      method: "POST",
       body: JSON.stringify({ username, password }),
     });
-    const data = await response.json();
-    return data;
   }
 
   async getCurrentUser() {
-    const response = await fetch(`${this.baseURL}/api/v1/users/current`, {
+    return this.fetch(`/api/v1/users/current`, {
       method: "GET",
-      headers: this.headers,
     });
-    return response.json();
   }
 
   async login(username, password) {
-    const response = await fetch(`${this.baseURL}/api/v1/auth/login`, {
+    return this.fetch(`/api/v1/auth/login`, {
       method: "POST",
-      headers: this.headers,
       body: JSON.stringify({ username, password }),
     });
-    const data = await response.json();
-    return data;
   }
 
   async createMessage(content) {
-    const response = await fetch(`${this.baseURL}/api/v1/messages`, {
+    return this.fetch(`/api/v1/messages`, {
       method: "POST",
-      headers: this.headers,
       body: JSON.stringify({ content }),
     });
-    return response.json();
   }
 
   async listMessages() {
-    const response = await fetch(`${this.baseURL}/api/v1/messages`, {
+    return this.fetch(`/api/v1/messages`, {
       method: "GET",
-      headers: this.headers,
     });
-    return response.json();
   }
 
   async deleteMessage(messageId) {
-    const response = await fetch(
-      `${this.baseURL}/api/v1/messages/${messageId}`,
-      {
-        method: "DELETE",
-        headers: this.headers,
-      }
-    );
-    return response.json();
+    return this.fetch(`${this.baseURL}/api/v1/messages/${messageId}`, {
+      method: "DELETE",
+      headers: this.headers,
+    });
   }
 }
