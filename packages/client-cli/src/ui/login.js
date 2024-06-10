@@ -8,10 +8,19 @@ builder.addScreen({
   description: "Login",
   async render() {
     while (builder.ctx.user === undefined) {
-      builder.output.write("🔑 Login\n");
+      builder.output.write("🔑 Login, or ESC to go back\n");
 
-      const username = await builder.ui.question("Username: ");
-      const password = await builder.ui.question("Password: ");
+      const username = await builder.escQuestion("Username: ");
+      if (username === builder.cancelSymbol) {
+        await builder.back();
+        return;
+      }
+
+      const password = await builder.escQuestion("Password: ");
+      if (password === builder.cancelSymbol) {
+        await builder.back();
+        return;
+      }
 
       const data = await builder.ctx.sdk.login(username, password);
 

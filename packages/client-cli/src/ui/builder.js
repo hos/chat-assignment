@@ -1,5 +1,6 @@
 import { Readline, createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
+import { onKeyPressController } from "../utils/onKeyPress.js";
 
 export const ui = createInterface({ input, output });
 export const rl = new Readline(output, { autoCommit: true });
@@ -9,6 +10,7 @@ class UIBuilder {
   input = input;
   ui = ui;
   rl = rl;
+  cancelSymbol = Symbol("canceled");
 
   // Persistent state across different screens, which they can share and modify.
   ctx = {};
@@ -84,6 +86,19 @@ class UIBuilder {
     return this.ctx.user ? `${this.ctx.user.username} > ` : " > ";
   }
 
+  async escQuestion(question) {
+    const { controller, unsubscribe } = onKeyPressController(["escape"]);
+    return builder.ui
+      .question(question, { signal: controller.signal })
+      .catch((err) => {
+        if (err.name === "AbortError") {
+          return this.cancelSymbol;
+        }
+        throw err;
+      })
+      .finally(unsubscribe);
+  }
+
   addScreen(
     screen = {
       name: "",
@@ -104,13 +119,13 @@ class UIBuilder {
 
   printCurrentState() {
     const currentScreen = this.getCurrentScreen();
-    if (currentScreen) {
-      output.write(
-        `screen: ${currentScreen.name}, user: ${JSON.stringify(
-          this.ctx.user.username
-        )}\n`
-      );
-    }
+
+    const msg = [
+      `screen: ${currentScreen?.name.replace("/", "")}`,
+      this.ctx.user ? `user: ${this.ctx.user.username}` : "unauthenticated",
+    ].join(", ");
+
+    output.write(msg + "\n");
   }
 
   getCurrentScreen() {

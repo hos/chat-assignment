@@ -8,10 +8,19 @@ builder.addScreen({
   description: "Register",
   async render() {
     while (!builder.ctx.user) {
-      builder.output.write("🔑 Register\n");
+      builder.output.write("🔑 Register, or ESC to go back\n");
 
-      const username = await builder.ui.question("Username: ");
-      const password = await builder.ui.question("Password: ");
+      const username = await builder.escQuestion("Username: ");
+      if (username === builder.cancelSymbol) {
+        await builder.back();
+        return;
+      }
+
+      const password = await builder.escQuestion("Password: ");
+      if (password === builder.cancelSymbol) {
+        await builder.back();
+        return;
+      }
 
       if (!builder.ctx.userSession) {
         const data = await builder.ctx.sdk.createUser(username, password);
