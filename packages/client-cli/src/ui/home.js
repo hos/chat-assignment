@@ -25,7 +25,7 @@ builder.addScreen({
     // Initialize baseUrl, all the other resources must use it from here.
     const baseUrl =
       (await builder.ctx.store.get("baseUrl")) ||
-      (await builder.ui.question(`Base URL: (default ${BASE_URL})`)) ||
+      (await builder.ui.question(`Base URL (default ${BASE_URL}):`)) ||
       BASE_URL;
 
     builder.ctx.baseUrl = baseUrl;
