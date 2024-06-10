@@ -1,5 +1,5 @@
 import { describe, test } from "node:test";
-import { ok, equal } from "assert";
+import { equal } from "assert";
 import {
   createUser,
   createUserSession,

@@ -1,8 +1,8 @@
 /**
  * @typedef {Object} Message
- * @property {number} id
- * @property {number} user_id
- * @property {number} room_id
+ * @property {string} id
+ * @property {string} user_id
+ * @property {string} room_id
  * @property {string} content
  * @property {string} created_at
  */
@@ -15,8 +15,8 @@ export const MESSAGE_LIMIT = 100;
 /**
  *
  * @param {Object} message
- * @param {number} message.userId
- * @param {number} message.roomId
+ * @param {string} message.userId
+ * @param {string} message.roomId
  * @param {string} message.content
  * @returns
  */
@@ -46,10 +46,10 @@ export async function createMessage({ userId, roomId, content }) {
  * We prefer here to use cursor based pagination, to avoid having invalid OFFSET,
  * when some rows have been removed.
  * @param {Object} query
- * @param {number} query.roomId
- * @param {number} [query.afterMessageId]
- * @param {number} [query.beforeMessageId]
- * @param {number} [query.limit]
+ * @param {string} query.roomId
+ * @param {string} [query.afterMessageId]
+ * @param {string} [query.beforeMessageId]
+ * @param {string} [query.limit]
  * @returns {Promise<Message[]>}
  */
 export async function getMessagesByRoomId({
@@ -78,8 +78,8 @@ export async function getMessagesByRoomId({
 /**
  * Here we need to know which use is deleting the message,
  * to ensure that the user can delete only his own messages.
- * @param {number} userId Who is deleting the message.
- * @param {number} messageId
+ * @param {string} userId Who is deleting the message.
+ * @param {string} messageId
  * @returns {Promise<number>}
  */
 export async function deleteMessageById(userId, messageId) {

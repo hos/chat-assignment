@@ -14,4 +14,10 @@ data
 
 
 *.env
+
+# This is pre-configured env vars for running with docker-compose,
+# if you want to override them, create a development.env file in the root of the project.
 !.env
+
+# This is pre-configured env vars for running tests, so we will need to commit this one too.
+!test.env

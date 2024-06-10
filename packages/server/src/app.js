@@ -9,7 +9,7 @@ import {
   authMiddleware,
   socketAuthMiddleware,
 } from "./middleware/authMiddleware.js";
-import { migrate } from "./database/index.js";
+import { migrate, pgClient } from "./database/index.js";
 import { server, io, app } from "./server.js";
 import { httpLogger, logger } from "./utils/logger.js";
 import { pubClient, subClient } from "./cache/client.js";

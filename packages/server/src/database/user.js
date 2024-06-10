@@ -11,7 +11,7 @@ import { pgClient } from "./client.js";
 
 /**
  * @typedef {Object} Session
- * @property {number} id
+ * @property {string} id
  * @property {string} token
  * @property {Date} created_at
  */

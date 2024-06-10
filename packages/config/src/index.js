@@ -2,7 +2,13 @@ import { loadEnvFile } from "node:process";
 import { stat } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const env = process.env.NODE_ENV || "development";
+let env = process.env.NODE_ENV || "development";
+// Node.js test runner will set this environment variable, so we can auto detect,
+// when we are running inside the test runner.
+if (process.env.NODE_TEST_CONTEXT) {
+  env = "test";
+}
+
 const rootDir = resolve("../../");
 const optionalEnvFile = resolve(rootDir, `${env}.env`);
 

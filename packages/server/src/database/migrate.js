@@ -5,14 +5,19 @@ import { pgClient } from "./client.js";
  * @param {boolean} drop If provided the tables will be dropped before creating them.
  */
 export async function migrate(drop) {
+  // @electric-sql/pglite does not support running multiple queries at once,
+  // so we switch to `exec` in the tests.
+  const exec =
+    "exec" in pgClient ? pgClient.exec.bind(pgClient) : pgClient.query.bind(pgClient);
+
   if (drop) {
-    await pgClient.exec(`--sql
+    await exec(`--sql
       drop schema if exists public cascade;
       create schema public;
     `);
   }
 
-  await pgClient.exec(`--sql
+  await exec(`--sql
     create table if not exists public.users (
       id bigint primary key generated always as identity,
       username text not null unique,
