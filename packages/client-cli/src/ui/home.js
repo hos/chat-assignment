@@ -32,7 +32,14 @@ builder.addScreen({
     await builder.ctx.store.set("baseUrl", baseUrl);
 
     if (!builder.ctx.sdk) {
-      builder.ctx.sdk = new ChatSDK(baseUrl);
+      const sdk = new ChatSDK(baseUrl);
+      const health = await sdk.healthCheck().catch(() => null);
+      if (health?.status !== "ok") {
+        throw new Error(
+          `❌ Server is not healthy\n status: ${health?.status || 'n/a'}\n host: ${sdk.baseURL}`
+        );
+      }
+      builder.ctx.sdk = sdk;
     }
 
     // If there is a session in the store, try to login with it.
