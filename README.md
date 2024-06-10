@@ -52,3 +52,10 @@ yarn test:watch
 ```
 
 Beside this tests, you can run test for each package separately. You can check the README.md file of each package for more information.
+
+## Postman
+
+This project have a postman collection to test the REST API, you can find it in the root of the project `Chat.postman_collection.json`. You can import it in your postman and test the REST API. As postman don't support exporting `socket.io` collections, you will need to manually the the `socket.io` requests. First add an `socket.io` request,
+use `wss://chat.wyll.in` or `ws://localhost:3024` if you have a server locally running. Then you will need to login using the RESET API where you will get the `token` in response
+body and `headers['Set-Cookie']`. After that, you will need to manually add `Cookie` header to the `socket.io` request with a value `token=TOKEN_VALUE`. Then you can
+connect to the server. Also don't forget to subscribe to the `message` event to receive the messages.
