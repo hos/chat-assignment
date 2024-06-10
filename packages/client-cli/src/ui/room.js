@@ -17,7 +17,7 @@ builder.addScreen({
       builder.redirect("/home");
     }
 
-    if (!builder.ctx.socket) {
+    if (!builder.ctx.socket || !builder.ctx.socket.connected) {
       const token = await builder.ctx.store.get("token");
       builder.ctx.socket = io(builder.ctx.baseUrl.replace("http", "ws"), {
         auth: { token },
